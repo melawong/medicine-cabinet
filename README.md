@@ -1,4 +1,4 @@
-### Welcome to the Medicine Cabinet! 
+# Welcome to the Medicine Cabinet! 
 
 ## Getting Started
 
