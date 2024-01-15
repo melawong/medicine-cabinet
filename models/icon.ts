@@ -17,3 +17,8 @@ export const HOME_ICON: Icon = {
   path: "/images/home_icon.svg",
   description: "a small house",
 };
+
+export const SEARCH_ICON: Icon = {
+  path: "/images/search.svg",
+  description: "a search symbol",
+};

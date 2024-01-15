@@ -12,7 +12,7 @@ export default function PrescriptionCard({
 }: PrescriptionCardProps) {
   const [savedFavorite, setSavedFavorite] = useState<boolean>(false);
   return (
-    <div className="border-2 border-solid rounded-md p-3 m-2 min-w-[350px]">
+    <div className="border-2 border-solid rounded-md p-3 m-2 w-[350px]">
       <div className="flex flex-row justify-between">
         <p className="text-lg font-bold text-indigo-700">
           {prescription.name}{" "}

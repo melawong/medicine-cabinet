@@ -14,7 +14,33 @@ export default function Home() {
   const [prescriptionsToShow, setPrescriptionsToShow] = useState<
     Prescription[]
   >([]);
-  const handleSearch = (searchTerm: string) => {};
+  const handleSearch = (searchTerm: string) => {
+    if (!searchTerm.trim()) {
+      setPrescriptionsToShow(allPrescriptions);
+      return;
+    }
+
+    const searchTermLower = searchTerm.toLowerCase();
+
+    const filteredPrescriptions = prescriptions.filter((prescription) =>
+      prescription.name.toLowerCase().includes(searchTermLower)
+    );
+
+    filteredPrescriptions.sort((a, b) => {
+      const aStartsWith = a.name.toLowerCase().startsWith(searchTermLower);
+      const bStartsWith = b.name.toLowerCase().startsWith(searchTermLower);
+
+      if (aStartsWith && !bStartsWith) {
+        return -1;
+      } else if (!aStartsWith && bStartsWith) {
+        return 1;
+      } else {
+        return a.name.localeCompare(b.name);
+      }
+    });
+
+    setPrescriptionsToShow(filteredPrescriptions);
+  };
 
   useEffect(() => {
     async function setInitialPrescriptions() {
@@ -34,7 +60,7 @@ export default function Home() {
 
   return (
     <main
-      className={`flex min-h-screen flex-col items-center p-4 justify-between ${inter.className}`}
+      className={`flex min-h-screen flex-col items-center ${inter.className}`}
     >
       {isLoading ? (
         <LoadingScreen />
