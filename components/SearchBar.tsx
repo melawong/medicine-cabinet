@@ -19,7 +19,7 @@ const SearchBar = ({ handleSearch }: SearchBarProps) => {
   };
 
   return (
-    <div className="flex flex-row rounded-lg border-2 border-slate-500 m-2 w-[350px] h-12">
+    <div className="flex flex-row rounded-lg border-2 border-slate-200 mb-2 mt-6 w-[350px] h-12">
       <form
         onSubmit={handleSubmit}
         className="flex justify-between items-center w-full"
@@ -29,12 +29,12 @@ const SearchBar = ({ handleSearch }: SearchBarProps) => {
           placeholder="Search prescriptions..."
           value={searchTerm}
           onChange={handleInputChange}
-          className="w-4/5 text-lg my-6 mx-2"
+          className="w-4/5 text-lg my-6 mx-2 text-indigo-500 focus:outline-none placeholder:text-slate-300 placeholder:italic"
         />
 
         <button
           type="submit"
-          className="flex items-center justify-center rounded-r-lg my-6 ml-2 w-1/5 h-12 bg-indigo-500"
+          className="flex items-center justify-center rounded-r-lg my-6 ml-2 w-1/5 h-12 bg-indigo-300"
         >
           <Image
             src={SEARCH_ICON.path}

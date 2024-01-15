@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { SMALL_HEART, SMALL_HEART_FILLED } from "@/models/icon";
 import axios from "axios";
+import { capitalize } from "@/utils/helpers";
 
 interface PrescriptionCardProps {
   prescription: Prescription;
@@ -70,8 +71,8 @@ export default function PrescriptionCard({
       </div>
       <hr className="size-0.25 bg-indigo-500 w-full mt-3 mb-3" />
       <div>
-        <p>{prescription.frequency}</p>
-        <p>{prescription.duration}</p>
+        <p className="text-indigo-800">{capitalize(prescription.frequency)}</p>
+        <p className="text-indigo-800"> {capitalize(prescription.duration)}</p>
       </div>
     </div>
   );

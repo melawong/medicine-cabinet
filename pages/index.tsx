@@ -6,7 +6,6 @@ import PrescriptionCard from "@/components/PrescriptionCard";
 import LoadingScreen from "@/components/LoadingScreen";
 import Footer from "@/components/Footer";
 import prescriptions from "../mockDatabase/prescriptions.json";
-import axios from "axios";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -50,7 +49,7 @@ export default function Home() {
         () => 0.5 - Math.random()
       );
       setPrescriptionsToShow(shuffledPrescriptions.slice(0, 6));
-      setTimeout(() => setIsLoading(false), 2000);
+      setTimeout(() => setIsLoading(false), 1500);
     }
 
     setInitialPrescriptions();

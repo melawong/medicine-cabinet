@@ -1,9 +1,12 @@
 import PrescriptionCard from "@/components/PrescriptionCard";
+import { Inter } from "next/font/google";
 import { Prescription } from "@/models/prescription";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import LoadingScreen from "@/components/LoadingScreen";
 import Footer from "@/components/Footer";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function SavedPrescriptions() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -24,7 +27,9 @@ export default function SavedPrescriptions() {
   }, [prescriptionsToShow]);
 
   return (
-    <>
+    <div
+      className={`flex min-h-screen flex-col items-center ${inter.className}`}
+    >
       {isLoading ? (
         <LoadingScreen />
       ) : (
@@ -49,6 +54,6 @@ export default function SavedPrescriptions() {
           <Footer />
         </div>
       )}
-    </>
+    </div>
   );
 }
