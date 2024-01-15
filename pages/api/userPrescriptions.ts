@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import fs from "fs";
-import path from "path";
 import { Prescription } from "@/models/prescription";
 import savedPrescriptions from "../../mockDatabase/savedPrescriptions.json";
 
