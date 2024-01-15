@@ -14,9 +14,9 @@ export default function IconCircleBorder({
   return (
     <>
       <div
-        className={`flex flex-auto rounded-full justify-center size-10 ${backgroundColor}`}
+        className={`flex flex-auto rounded-full justify-center size-12 p-2 ${backgroundColor}`}
       >
-        <Image src={icon.path} alt={icon.description} height={30} width={30} />
+        <Image src={icon.path} alt={icon.description} height={28} width={28} />
       </div>
     </>
   );

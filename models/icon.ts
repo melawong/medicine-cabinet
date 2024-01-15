@@ -12,3 +12,8 @@ export const SMALL_HEART_FILLED: Icon = {
   path: "/images/small_heart-filled.svg",
   description: "a small heart -- filled",
 };
+
+export const HOME_ICON: Icon = {
+  path: "/images/home_icon.svg",
+  description: "a small house",
+};
