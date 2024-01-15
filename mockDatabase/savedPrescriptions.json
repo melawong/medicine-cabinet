@@ -1,9 +1,1 @@
-[
-  {
-    "id": 7,
-    "name": "Simvastatin",
-    "dosage": "200mg",
-    "frequency": "every 4-6 hours",
-    "duration": "as needed"
-  }
-]
+[{"id":9,"name":"Zolpidem","dosage":"200mg","frequency":"every 4-6 hours","duration":"as needed"},{"id":6,"name":"Amlodipine","dosage":"10mg","frequency":"Twice daily","duration":"as needed"},{"id":1,"name":"Amoxicillin","dosage":"500mg","frequency":"Three times a day","duration":"7 days"}]

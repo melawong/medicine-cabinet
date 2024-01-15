@@ -15,8 +15,8 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   if (req.method === "POST") {
-    console.log(req.body);
     const { prescriptionToAddOrRemove } = req.body;
+    let savedPrescriptionList: Prescription[] = [];
 
     fs.readFile(
       "./mockDatabase/savedPrescriptions.json",
@@ -28,14 +28,12 @@ export default function handler(
             .json({ name: "Error", message: "Error reading file." });
         }
 
-        let savedPrescriptionList = JSON.parse(data);
+        savedPrescriptionList = JSON.parse(data);
 
         const prescriptionIndex = savedPrescriptionList.findIndex(
           (prescription: Prescription) =>
             prescription.id === prescriptionToAddOrRemove.id
         );
-
-        console.log({ savedPrescriptionList });
 
         if (prescriptionIndex > -1) {
           savedPrescriptionList.splice(prescriptionIndex, 1);
@@ -55,13 +53,13 @@ export default function handler(
             }
           }
         );
-        return res.status(200).json({
-          name: "Success",
-          message: "Saved prescription list successfully updated.",
-          data: savedPrescriptionList,
-        });
       }
     );
+    return res.status(200).json({
+      name: "Success",
+      message: "Saved prescription list successfully updated.",
+      data: savedPrescriptionList,
+    });
   }
 
   if (req.method === "GET") {

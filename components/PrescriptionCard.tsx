@@ -1,18 +1,42 @@
 import { Prescription } from "@/models/prescription";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SMALL_HEART, SMALL_HEART_FILLED } from "@/models/icon";
+import axios from "axios";
 
 interface PrescriptionCardProps {
   prescription: Prescription;
-  handleSavePrescription: (prescriptionToAddOrRemove: Prescription) => void;
 }
 
 export default function PrescriptionCard({
   prescription,
-  handleSavePrescription,
 }: PrescriptionCardProps) {
-  const [savedFavorite, setSavedFavorite] = useState<boolean>(false);
+  const [isSaved, setIsSaved] = useState<boolean>(false);
+  const handleSavePrescription = async (
+    prescriptionToAddOrRemove: Prescription
+  ): Promise<void> => {
+    await axios.post("/api/userPrescriptions", {
+      prescriptionToAddOrRemove,
+    });
+    setIsSaved(!isSaved);
+  };
+
+  useEffect(() => {
+    async function setSavedPrescription() {
+      const userPrescriptionsResponse = await axios.get(
+        "/api/userPrescriptions"
+      );
+
+      const userSavedPrescriptions = userPrescriptionsResponse.data.data;
+      const savedPrescriptionIds = userSavedPrescriptions.map(
+        (prescription: Prescription) => prescription.id
+      );
+
+      setIsSaved(savedPrescriptionIds.includes(prescription.id));
+    }
+    setSavedPrescription();
+  }, []);
+
   return (
     <div className="border-2 border-solid rounded-md p-3 m-2 w-[350px]">
       <div className="flex flex-row justify-between">
@@ -25,10 +49,9 @@ export default function PrescriptionCard({
         <div
           onClick={() => {
             handleSavePrescription(prescription);
-            setSavedFavorite(!savedFavorite);
           }}
         >
-          {savedFavorite ? (
+          {isSaved ? (
             <Image
               src={SMALL_HEART_FILLED.path}
               alt={SMALL_HEART_FILLED.description}

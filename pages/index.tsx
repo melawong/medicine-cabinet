@@ -44,14 +44,6 @@ export default function Home() {
     setPrescriptionsToShow(filteredPrescriptions);
   };
 
-  const handleSavePrescription = async (
-    prescriptionToAddOrRemove: Prescription
-  ): Promise<void> => {
-    await axios.post("/api/userPrescriptions", {
-      prescriptionToAddOrRemove,
-    });
-  };
-
   useEffect(() => {
     async function setInitialPrescriptions() {
       const shuffledPrescriptions = prescriptions.sort(
@@ -77,18 +69,19 @@ export default function Home() {
       ) : (
         <>
           <SearchBar handleSearch={handleSearch} />
+
           {prescriptionsToShow.map((prescription: Prescription) => {
             return (
               <PrescriptionCard
                 key={prescription.name}
                 prescription={prescription}
-                handleSavePrescription={handleSavePrescription}
               />
             );
           })}
-          <Footer />
         </>
       )}
+      <div className="h-32"></div>
+      <Footer />
     </main>
   );
 }
