@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import fs from "fs";
 import path from "path";
 import { Prescription } from "@/models/prescription";
-import savedPrescriptions from "./savedPrescriptions.json";
+import savedPrescriptions from "../../mockDatabase/savedPrescriptions.json";
 
 type Data = {
   name?: string;
@@ -15,45 +15,53 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   if (req.method === "POST") {
-    const { prescriptionToSave } = req.body;
-    const filePath = path.resolve("./savedPrescriptions.json");
+    console.log(req.body);
+    const { prescriptionToAddOrRemove } = req.body;
 
-    fs.readFile(filePath, "utf8", (err, data) => {
-      if (err) {
-        return res
-          .status(500)
-          .json({ name: "Error", message: "Error reading file." });
-      }
-
-      let savedPrescriptionList = JSON.parse(data);
-      const prescriptionIndex = savedPrescriptionList.findIndex(
-        (prescription: Prescription) =>
-          prescription.id === prescriptionToSave.id
-      );
-
-      if (prescriptionIndex > -1) {
-        savedPrescriptionList.splice(prescriptionIndex, 1);
-      } else {
-        savedPrescriptionList.push(prescriptionToSave);
-      }
-
-      fs.writeFile(
-        filePath,
-        JSON.stringify(savedPrescriptionList, null, 2),
-        "utf8",
-        (err) => {
-          if (err) {
-            return res
-              .status(500)
-              .json({ name: "Error", message: "Error writing to file." });
-          }
-          return res.status(200).json({
-            name: "Success",
-            message: "Saved prescription list successfully updated.",
-          });
+    fs.readFile(
+      "./mockDatabase/savedPrescriptions.json",
+      "utf8",
+      (err, data) => {
+        if (err) {
+          return res
+            .status(500)
+            .json({ name: "Error", message: "Error reading file." });
         }
-      );
-    });
+
+        let savedPrescriptionList = JSON.parse(data);
+
+        const prescriptionIndex = savedPrescriptionList.findIndex(
+          (prescription: Prescription) =>
+            prescription.id === prescriptionToAddOrRemove.id
+        );
+
+        console.log({ savedPrescriptionList });
+
+        if (prescriptionIndex > -1) {
+          savedPrescriptionList.splice(prescriptionIndex, 1);
+        } else {
+          savedPrescriptionList.push(prescriptionToAddOrRemove);
+        }
+
+        fs.writeFile(
+          "./mockDatabase/savedPrescriptions.json",
+          JSON.stringify(savedPrescriptionList),
+          "utf8",
+          (err) => {
+            if (err) {
+              return res
+                .status(500)
+                .json({ name: "Error", message: "Error writing to file." });
+            }
+          }
+        );
+        return res.status(200).json({
+          name: "Success",
+          message: "Saved prescription list successfully updated.",
+          data: savedPrescriptionList,
+        });
+      }
+    );
   }
 
   if (req.method === "GET") {

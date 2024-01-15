@@ -5,8 +5,8 @@ import { Prescription } from "@/models/prescription";
 import PrescriptionCard from "@/components/PrescriptionCard";
 import LoadingScreen from "@/components/LoadingScreen";
 import Footer from "@/components/Footer";
-import prescriptions from "./api/prescriptions.json";
-import savedPrescriptions from "./api/savedPrescriptions.json";
+import prescriptions from "../mockDatabase/prescriptions.json";
+import axios from "axios";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,21 +44,12 @@ export default function Home() {
     setPrescriptionsToShow(filteredPrescriptions);
   };
 
-  const handleSavePrescription = (
+  const handleSavePrescription = async (
     prescriptionToAddOrRemove: Prescription
-  ): void => {
-    const prescriptionIndex = savedPrescriptions.findIndex(
-      (prescription: Prescription) =>
-        (prescription.id = prescriptionToAddOrRemove.id)
-    );
-    console.log({ prescriptionIndex });
-    if (prescriptionIndex > -1) {
-      savedPrescriptions.splice(prescriptionIndex, 1);
-    } else {
-      // If the id is not found, add a new object with this id
-      savedPrescriptions.push(prescriptionToAddOrRemove);
-      console.log({ savedPrescriptions });
-    }
+  ): Promise<void> => {
+    await axios.post("/api/userPrescriptions", {
+      prescriptionToAddOrRemove,
+    });
   };
 
   useEffect(() => {
