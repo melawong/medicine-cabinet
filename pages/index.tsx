@@ -4,7 +4,8 @@ import SearchBar from "@/components/SearchBar";
 import prescriptions from "../prescriptions.json";
 import { Prescription } from "@/models/prescription";
 import PrescriptionCard from "@/components/PrescriptionCard";
-import LoadingDots from "@/components/LoadingDots";
+import LoadingScreen from "@/components/LoadingScreen";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,12 +14,10 @@ export default function Home() {
   const [prescriptionsToShow, setPrescriptionsToShow] = useState<
     Prescription[]
   >([]);
-  const handleSearch = (searchTerm: string) => {
-    // display cards
-  };
+  const handleSearch = (searchTerm: string) => {};
 
   useEffect(() => {
-    async function getInitialPrescriptions() {
+    async function setInitialPrescriptions() {
       const shuffledPrescriptions = prescriptions.sort(
         () => 0.5 - Math.random()
       );
@@ -26,15 +25,19 @@ export default function Home() {
       setTimeout(() => setIsLoading(false), 2000);
     }
 
-    getInitialPrescriptions();
+    setInitialPrescriptions();
+  }, []);
+
+  const allPrescriptions = useMemo(() => {
+    return prescriptions;
   }, []);
 
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+      className={`flex min-h-screen flex-col items-center p-4 justify-between ${inter.className}`}
     >
       {isLoading ? (
-        <LoadingDots />
+        <LoadingScreen />
       ) : (
         <>
           <SearchBar handleSearch={handleSearch} />
@@ -46,6 +49,7 @@ export default function Home() {
               />
             );
           })}
+          <Footer />
         </>
       )}
     </main>
