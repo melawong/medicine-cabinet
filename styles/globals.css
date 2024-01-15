@@ -12,3 +12,25 @@ body {
   color: rgb(var(--foreground-rgb));
   background: white;
 }
+
+@keyframes loading-dots {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.dot1 {
+  animation: loading-dots 1.2s linear infinite;
+}
+.dot2 {
+  animation: loading-dots 1.2s linear infinite;
+  animation-delay: -0.4s;
+}
+.dot3 {
+  animation: loading-dots 1.2s linear infinite;
+  animation-delay: -0.8s;
+}
