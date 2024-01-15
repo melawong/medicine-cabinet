@@ -61,14 +61,13 @@ export default function Home() {
 
   return (
     <main
-      className={`flex min-h-screen flex-col items-center ${inter.className}`}
+      className={`flex min-h-screen flex-col items-center ${inter.className} bg-custom-image bg-contain`}
     >
       {isLoading ? (
         <LoadingScreen />
       ) : (
         <>
-          <SearchBar handleSearch={handleSearch} />
-
+          <SearchBar handleSearch={handleSearch} />{" "}
           {prescriptionsToShow.map((prescription: Prescription) => {
             return (
               <PrescriptionCard
