@@ -5,10 +5,12 @@ import { SMALL_HEART, SMALL_HEART_FILLED } from "@/models/icon";
 
 interface PrescriptionCardProps {
   prescription: Prescription;
+  handleSavePrescription: (prescriptionToAddOrRemove: Prescription) => void;
 }
 
 export default function PrescriptionCard({
   prescription,
+  handleSavePrescription,
 }: PrescriptionCardProps) {
   const [savedFavorite, setSavedFavorite] = useState<boolean>(false);
   return (
@@ -22,6 +24,7 @@ export default function PrescriptionCard({
         </p>
         <div
           onClick={() => {
+            handleSavePrescription(prescription);
             setSavedFavorite(!savedFavorite);
           }}
         >

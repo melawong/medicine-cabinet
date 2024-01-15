@@ -1,11 +1,12 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { Inter } from "next/font/google";
 import SearchBar from "@/components/SearchBar";
-import prescriptions from "../prescriptions.json";
 import { Prescription } from "@/models/prescription";
 import PrescriptionCard from "@/components/PrescriptionCard";
 import LoadingScreen from "@/components/LoadingScreen";
 import Footer from "@/components/Footer";
+import prescriptions from "./api/prescriptions.json";
+import savedPrescriptions from "./api/savedPrescriptions.json";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,6 +15,7 @@ export default function Home() {
   const [prescriptionsToShow, setPrescriptionsToShow] = useState<
     Prescription[]
   >([]);
+
   const handleSearch = (searchTerm: string) => {
     if (!searchTerm.trim()) {
       setPrescriptionsToShow(allPrescriptions);
@@ -40,6 +42,23 @@ export default function Home() {
     });
 
     setPrescriptionsToShow(filteredPrescriptions);
+  };
+
+  const handleSavePrescription = (
+    prescriptionToAddOrRemove: Prescription
+  ): void => {
+    const prescriptionIndex = savedPrescriptions.findIndex(
+      (prescription: Prescription) =>
+        (prescription.id = prescriptionToAddOrRemove.id)
+    );
+    console.log({ prescriptionIndex });
+    if (prescriptionIndex > -1) {
+      savedPrescriptions.splice(prescriptionIndex, 1);
+    } else {
+      // If the id is not found, add a new object with this id
+      savedPrescriptions.push(prescriptionToAddOrRemove);
+      console.log({ savedPrescriptions });
+    }
   };
 
   useEffect(() => {
@@ -72,6 +91,7 @@ export default function Home() {
               <PrescriptionCard
                 key={prescription.name}
                 prescription={prescription}
+                handleSavePrescription={handleSavePrescription}
               />
             );
           })}

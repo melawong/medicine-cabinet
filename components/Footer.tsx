@@ -13,7 +13,7 @@ export default function Footer() {
       </div>
 
       <div className="flex flex-col items-center">
-        <a href={"/saved-prescriptions"}>
+        <a href={"/my-prescriptions"}>
           <IconCircleBorder icon={SMALL_HEART} backgroundColor="bg-blue-300" />
         </a>
         <div className="font-bold mt-1">Saved</div>
